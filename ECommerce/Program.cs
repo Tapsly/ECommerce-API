@@ -12,6 +12,7 @@ namespace ECommerce
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            
             // Add services to the container.
             // Add model services
             builder.Services.AddScoped<IProduct,ProductsService>();
@@ -36,6 +37,9 @@ namespace ECommerce
                 options => options.UseSqlServer(
                     builder.Configuration.GetConnectionString("EFCoreDBConnection"))
             );
+            // Add Caching services
+            builder.Services.AddMemoryCache();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

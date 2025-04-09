@@ -1,5 +1,5 @@
-﻿using ECommerce.Models.Models;
-using ECommerce.Utils.Filters;
+﻿using ECommerce.Models.Filters;
+using ECommerce.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

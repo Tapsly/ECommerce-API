@@ -1,8 +1,7 @@
 ﻿using ECommerce.Data;
 using ECommerce.Models.Models;
 using ECommerce.Services.Interfaces;
-using ECommerce.Utils.Filters;
-using Microsoft.AspNetCore.Http;
+using ECommerce.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -71,12 +70,6 @@ namespace ECommerce.Services.Services
                 _dbContext.Products.Entry(existingProduct).CurrentValues.SetValues(product);
                 await _dbContext.SaveChangesAsync();
             }
-        }
-
-
-        public Task UpLoadProductImageAsync(int id, IFormFile formFile)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,18 +1,11 @@
-﻿using ECommerce.Models.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ECommerce.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using ECommerce.Data;
+using ECommerce.Models.Models;
 using ECommerce.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Services.Services
 {
-    public class TrackingDetailsService(ECommerceDbContext dbContext):ITrackingDetail
+    public class TrackingDetailsService(ECommerceDbContext dbContext) : ITrackingDetail
     {
         private readonly ECommerceDbContext _dbContext = dbContext;
         public async Task DeleteTrackingDetailByOrderIdAsync(int orderId)

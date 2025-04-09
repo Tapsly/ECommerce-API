@@ -1,7 +1,7 @@
 ﻿using ECommerce.Data;
 using ECommerce.Models.Models;
 using ECommerce.Services.Interfaces;
-using ECommerce.Utils.Filters;
+using ECommerce.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Services.Services

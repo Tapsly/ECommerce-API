@@ -1,18 +1,13 @@
-﻿using ECommerce.Models.Models;
+﻿using ECommerce.Data;
+using ECommerce.Models.Models;
 using ECommerce.Services.Interfaces;
-using ECommerce.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Services.Services
 {
-    public class AddressesService(ECommerceDbContext dbContext):IAddress
+    public class AddressesService(ECommerceDbContext dbContext) : IAddress
     {
-        private readonly  ECommerceDbContext _dbContext = dbContext;
+        private readonly ECommerceDbContext _dbContext = dbContext;
         public async Task DeleteAddressByCustomerAndAddressIdAsync(int customerId, int addressId)
         {
             var existingAddress = _dbContext.Addresses.FirstOrDefault(add =>

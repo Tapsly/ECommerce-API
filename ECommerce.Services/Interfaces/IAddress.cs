@@ -6,7 +6,7 @@ namespace ECommerce.Services.Interfaces
     {
         public Task<List<Address>> GetAddressesByCustomerIdAsync(int customerId);
         public Task<Address?> GetAddressByCustomerIdAndAddressIdAsync(int customerId, int addressId);
-        public Task UpdateAddressByCustomerIdAndAddressIdAsync(int customerId, int addressId, Address updatedAddress);
+        public Task<Address?> UpdateAddressByCustomerIdAndAddressIdAsync(int customerId, int addressId, Address updatedAddress);
         public Task DeleteAddressesByCustomerIdAsync(int customerId);
         public Task DeleteAddressByCustomerAndAddressIdAsync(int customerId, int addressId);
     }

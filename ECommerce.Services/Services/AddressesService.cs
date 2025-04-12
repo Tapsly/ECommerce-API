@@ -15,6 +15,9 @@ namespace ECommerce.Services.Services
             try
             {
                 _dbContext.Addresses.Remove(existingAddress!);
+                // update the customer address and address id
+                /* _dbContext.Customers.Where(c => c.Id == customerId).ExecuteUpdateAsync(
+                     setters => setters.SetProperty(c => c.Addresses!.Where(add => add.Id == addressId), null));*/
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception)
@@ -65,9 +68,9 @@ namespace ECommerce.Services.Services
             }
         }
 
-        public async Task UpdateAddressByCustomerIdAndAddressIdAsync(int customerId, int addressId, Address updatedAddress)
+        public async Task<Address?> UpdateAddressByCustomerIdAndAddressIdAsync(int customerId, int addressId, Address updatedAddress)
         {
-            var existingAddress = _dbContext.Addresses.FirstOrDefault(add =>
+            var existingAddress = await _dbContext.Addresses.FirstOrDefaultAsync(add =>
                 add.CustomerId == customerId && add.Id == addressId);
             try
             {
@@ -81,6 +84,7 @@ namespace ECommerce.Services.Services
 
                 throw;
             }
+            return updatedAddress;
         }
     }
 }

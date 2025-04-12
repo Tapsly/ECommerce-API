@@ -1,4 +1,6 @@
-﻿namespace ECommerce.Dtos
+﻿using ECommerce.Models.Models;
+
+namespace ECommerce.Dtos
 {
     public class OrderDetailsDto
     {
@@ -14,6 +16,6 @@
         public string ShippedDate { get; set; } = null!;
         public AddressDetailsDto ShippingAddress { get; set; } = null!;
         public List<OrderItemDto> OrderItems { get; set; } = null!;
-        public TrackingDetailsDto TrackingDetail { get; set; } = null!;
+        public TrackingDetail TrackingDetail { get; set; } = null!;
     }
 }

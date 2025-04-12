@@ -11,8 +11,6 @@ namespace ECommerce.Services.Caching
 {
     public class CategoriesCache(IMemoryCache cache)
     {
-        private readonly IMemoryCache _cache = cache;
-
         public List<Category>? GetValues(string cacheKey)
         {
             if (string.IsNullOrEmpty(cacheKey))
@@ -22,7 +20,11 @@ namespace ECommerce.Services.Caching
             var myCategories = new List<Category>();
             try
             {
-                if (_cache.TryGetValue(cacheKey, out List<Category>? categories))
+                if (!cache.TryGetValue(cacheKey, out List<Category>? categories))
+                {
+                    return null;
+                }
+                else
                 {
                     myCategories = categories;
                 }
@@ -37,7 +39,7 @@ namespace ECommerce.Services.Caching
 
         }
 
-        public List<Category> SetValues(List<Category> category, string cacheKey)
+        public  List<Category> SetValues(List<Category> category, string cacheKey)
         {
             if (category == null || string.IsNullOrEmpty(cacheKey))
             {
@@ -45,7 +47,10 @@ namespace ECommerce.Services.Caching
             }
             try
             {
-                _cache.Set(category, cacheKey);
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(5))
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(10));
+                 cache.Set(category, cacheKey, cacheEntryOptions);
             }
             catch (Exception)
             {
@@ -63,7 +68,7 @@ namespace ECommerce.Services.Caching
             }
             try
             {
-                _cache.Remove(cacheKey);
+                cache.Remove(cacheKey);
             }
             catch (Exception)
             {

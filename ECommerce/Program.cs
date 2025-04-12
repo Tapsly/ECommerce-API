@@ -22,6 +22,8 @@ namespace ECommerce
             builder.Services.AddScoped<IAddress, AddressesService>();
             builder.Services.AddScoped<ITrackingDetail, TrackingDetailsService>();
             builder.Services.AddScoped<ICategory, CategoriesService>();
+            // Add a response compression service
+            builder.Services.AddResponseCompression();
             // Add services to the container.
             builder.Services.AddControllers().AddJsonOptions(
                 options => options.JsonSerializerOptions.PropertyNamingPolicy = null
@@ -53,6 +55,8 @@ namespace ECommerce
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseResponseCompression();
 
             app.UseHttpsRedirection();
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ECommerce.Models.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ECommerce.Dtos
 {
@@ -10,6 +11,6 @@ namespace ECommerce.Dtos
         [Required]
         public int ShippingAddressId { get; set; }
         [Required]
-        public List<OrderItemCreateDTO> Items { get; set; } = null!;
+        public List<OrderItem> Items { get; set; } = null!;
     }
 }

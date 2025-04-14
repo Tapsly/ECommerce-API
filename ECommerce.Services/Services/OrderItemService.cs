@@ -2,18 +2,14 @@
 using ECommerce.Models.Models;
 using ECommerce.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace ECommerce.Services.Services
 {
-    public class OrderItemService(ECommerceDbContext dbContext):IOrderItem
+    public class OrderItemService(ECommerceDbContext dbContext, ILogger<OrderItemService> logger) : IOrderItem
     {
         private readonly ECommerceDbContext _dbContext = dbContext;
-
+        private readonly ILogger<OrderItemService> _logger = logger;
         public async Task CreateOrderItemAsync(OrderItem newOrderItem)
         {
             await _dbContext.OrderItems.AddAsync(newOrderItem);
@@ -44,13 +40,37 @@ namespace ECommerce.Services.Services
             return await _dbContext.OrderItems.Where(oi => oi.ProductId == productId).ToListAsync();
         }
 
-        public async Task UpdateOrderItemByIdAsync(int id, OrderItem updatedOrderItem)
+        public async Task<bool> HasOrderItems()
         {
-            var existingOrderItem = _dbContext.OrderItems.Find(id);
-            existingOrderItem!.Quantity = updatedOrderItem.Quantity;
-            existingOrderItem!.Discount = updatedOrderItem.Discount;
-            existingOrderItem!.TotalPrice = updatedOrderItem.TotalPrice;
-            await _dbContext.SaveChangesAsync();
+            return await _dbContext.OrderItems.AnyAsync();
+        }
+
+        public async Task<bool> OrderHasOrderItems(int orderId)
+        {
+            return await _dbContext.OrderItems.AnyAsync(oi => oi.OrderId.Equals(orderId));
+        }
+
+        public async Task<OrderItem?> UpdateOrderItemByIdAsync(int id, OrderItem updatedOrderItem)
+        {
+            var existingOrderItem = await _dbContext.OrderItems.FindAsync(id);
+            if (existingOrderItem is null)
+            {
+                _logger.LogInformation($"The orderItem with id:{id} does not exist");
+                return null;
+            }
+            try
+            {
+                existingOrderItem!.Quantity = updatedOrderItem.Quantity;
+                existingOrderItem!.Discount = updatedOrderItem.Discount;
+                existingOrderItem!.TotalPrice = updatedOrderItem.TotalPrice;
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return updatedOrderItem;
         }
     }
 }

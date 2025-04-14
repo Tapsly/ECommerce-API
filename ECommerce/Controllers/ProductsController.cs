@@ -100,13 +100,13 @@ namespace ECommerce.Controllers
         /// <param>No params</param>
         /// <returns>Created Product</returns>
         [HttpPut]
-        [Consumes("application/json")]  
+        [Consumes("application/json")]
         [ProducesResponseType(201)]
         [ProducesResponseType(403)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> CreateProductAsync([FromBody] Product product)
         {
-            if(product is null)
+            if (product is null)
             {
                 return BadRequest(new { message = "Product must not be null" });
             }
@@ -114,7 +114,7 @@ namespace ECommerce.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                     await _service.CreateProductAsync(product);
+                    await _service.CreateProductAsync(product);
                 }
             }
             catch (Exception)
@@ -122,7 +122,7 @@ namespace ECommerce.Controllers
 
                 throw;
             }
-            return CreatedAtAction(nameof(GetProductByIdAsync), new { Id = product.Id }, product);
+            return CreatedAtAction(nameof(GetProductByIdAsync), new { id = product.Id }, product);
 
         }
 

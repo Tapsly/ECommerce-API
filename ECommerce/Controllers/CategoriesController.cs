@@ -44,7 +44,7 @@ namespace ECommerce.Controllers
             }
         }
         /// <summary>
-        /// route api/categories/category/{id} 
+        /// GET api/categories/category/{id} 
         /// fetches an existing category
         /// </summary>
         /// <param name="id">{id}</param>

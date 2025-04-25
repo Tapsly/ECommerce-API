@@ -1,7 +1,6 @@
 ﻿using ECommerce.Models.Models;
 using ECommerce.Services.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ECommerce.Controllers
 {
@@ -189,7 +188,7 @@ namespace ECommerce.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> DeleteOrderItemsByIdAsync(int orderId,int orderItemId)
+        public async Task<IActionResult> DeleteOrderItemsByIdAsync(int orderId, int orderItemId)
         {
             try
             {
@@ -223,15 +222,16 @@ namespace ECommerce.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> UpdateOrderItemByIdAsync(int id, OrderItem updatedOrderItem)
+        // Prevent over posting on this one
+        public async Task<IActionResult> UpdateOrderItemByIdAsync(int id, [FromBody] OrderItem updatedOrderItem)
         {
-            _logger.LogWarning("UpdatedOrderItems could be null here, please verify");
+            _logger.LogInformation("UpdateOrderItemByIdAsync action method hit and running...");
+            _logger.LogWarning("UpdatedOrderItem can be null here, please verify");
             if (updatedOrderItem == null)
                 return BadRequest(new { message = "updatedOrderItem must not be null" });
 
             try
             {
-                _logger.LogInformation("UpdateOrderItemByIdAsync action method hit and running...");
                 if (ModelState.IsValid)
                 {
                     await _orderItemService.UpdateOrderItemByIdAsync(id, updatedOrderItem);
@@ -256,6 +256,5 @@ namespace ECommerce.Controllers
             }
             return NoContent();
         }
-
     }
 }

@@ -2,15 +2,10 @@
 using ECommerce.Models.Models;
 using ECommerce.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Services.Services
 {
-    public class CustomersService(ECommerceDbContext dbContext):ICustomer
+    public class CustomersService(ECommerceDbContext dbContext) : ICustomer
     {
         private readonly ECommerceDbContext _dbContext = dbContext;
 
